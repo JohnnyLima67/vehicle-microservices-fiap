@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vehicle Registration API",
+    "version": "1.0.0",
+    "description": "API responsável pelo cadastro de veículos"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "paths": {
+    "/vehicles": {
+      "post": {
+        "summary": "Cadastrar veículo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vehicle"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Veículo cadastrado"
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "409": {
+            "description": "Placa já cadastrada"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Vehicle": {
+        "type": "object",
+        "required": [
+          "brand",
+          "model",
+          "year",
+          "color",
+          "plate"
+        ],
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Toyota"
+          },
+          "model": {
+            "type": "string",
+            "example": "Corolla"
+          },
+          "year": {
+            "type": "integer",
+            "example": 2024
+          },
+          "color": {
+            "type": "string",
+            "example": "Prata"
+          },
+          "plate": {
+            "type": "string",
+            "example": "ABC1D23"
+          }
+        }
+      }
+    }
+  }
+}
