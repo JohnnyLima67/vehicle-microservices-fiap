@@ -1,20 +1,11 @@
 const express = require("express");
-
 const Vehicle = require("../models/Vehicle");
 
 const router = express.Router();
 
-/**
- * GET /vehicles
- *
- * Filtros:
- * ?brand=Toyota
- * ?year=2024
- */
 router.get("/", async (req, res) => {
   try {
     const { brand, year } = req.query;
-
     const filter = {};
 
     if (brand) {
@@ -27,40 +18,35 @@ router.get("/", async (req, res) => {
 
     const vehicles = await Vehicle.find(filter);
 
-    return res.json({
+    res.json({
       total: vehicles.length,
-      vehicles,
+      vehicles
     });
   } catch (error) {
     console.error(error);
-
-    return res.status(500).json({
-      message: "Erro ao buscar veículos",
+    res.status(500).json({
+      message: "Erro ao buscar veículos"
     });
   }
 });
 
-/**
- * GET /vehicles/:id
- */
 router.get("/:id", async (req, res) => {
   try {
     const vehicle = await Vehicle.findOne({
-      registrationId: req.params.id,
+      registrationId: req.params.id
     });
 
     if (!vehicle) {
       return res.status(404).json({
-        message: "Veículo não encontrado",
+        message: "Veículo não encontrado"
       });
     }
 
-    return res.json(vehicle);
+    res.json(vehicle);
   } catch (error) {
     console.error(error);
-
-    return res.status(500).json({
-      message: "Erro ao buscar veículo",
+    res.status(500).json({
+      message: "Erro ao buscar veículo"
     });
   }
 });
